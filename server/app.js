@@ -5,6 +5,9 @@ const mainRoutes = require("./Router/Router");
 const Connection = require("./Database/Connection");
 app.use(mainRoutes);
 
+
+// le serveur il va pas demarer si on se connecte pas bien a atlas :) donc verifie ton internet dabord
+
 const connectServer = ()=>
 {
     Connection.connect()
