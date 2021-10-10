@@ -35,6 +35,7 @@ const CheckAndDoJob = async (jobLevel,job,request,response) => {
 
 exports.createCategorie = (request,response) => {
     CheckAndDoJob(2,CategorieController.createCategorie,request,response);
+    //c
 }
 exports.sayHello = (request,response) => {
     response.send("Hello world");
