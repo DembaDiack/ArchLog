@@ -1,8 +1,16 @@
 const express = require("express");
 const app = express();
 const PORT = 4000;
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
 const mainRoutes = require("./Router/Router");
 const Connection = require("./Database/Connection");
+
+
+app.use(cors());
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.use(mainRoutes);
 
 

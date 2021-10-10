@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose;
+const Schema = mongoose.Schema;
 
 
 //ici on va mettre un model,des quon auras une bonne structure de base de donnee
@@ -14,6 +14,10 @@ const Article = new Schema({
         required : true
     },
     Titre : {
+        type : String,
+        required : true
+    },
+    Contenue : {
         type : String,
         required : true
     }

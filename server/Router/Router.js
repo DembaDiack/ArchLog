@@ -7,5 +7,8 @@ const controller = require("../Controller/Controller");
 router.get("/",controller.sayHello);
 router.get("/articles",controller.sayHello);
 
+router.post("/token/create",controller.createToken);
+router.get("/user/all",controller.getAllUsers);
+router.post("/user/create",controller.createUser);
 
 module.exports = router;

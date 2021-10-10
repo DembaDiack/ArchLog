@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose;
+const Schema = mongoose.Schema;
 
 
 //ici on va mettre un model,des quon auras une bonne structure de base de donnee
@@ -18,6 +18,11 @@ const User = new Schema({
         type : Date,
         default : Date.now(),
         required : false
+    },
+    level : {
+        type : Number,
+        enum : [1,2,3],
+        default : 1
     }
 })
 
