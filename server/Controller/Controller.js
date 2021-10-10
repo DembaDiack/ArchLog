@@ -48,5 +48,8 @@ exports.getAllUsers = (request,response) => {
 exports.createToken = async (request,response) => {
     CheckAndDoJob(3,TokenController.CreateToken,request,response);
 }
+exports.getAllTokens = (request,response) => {
+    CheckAndDoJob(3,TokenController.getAllTokens,request,response);
+}
 
 // les fonctions lister,ajouter,supprimer etc seront ici

@@ -8,6 +8,10 @@ router.get("/",controller.sayHello);
 router.get("/articles",controller.sayHello);
 
 router.post("/token/create",controller.createToken);
+router.post("/token/all",controller.getAllTokens);
+
+
+
 router.get("/user/all",controller.getAllUsers);
 router.post("/user/create",controller.createUser);
 

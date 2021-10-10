@@ -45,3 +45,13 @@ exports.CreateToken = async (request,response)=> {
         console.log(err)
     })
 }
+
+exports.getAllTokens = (request,response) => {
+    TokenModel.find()
+    .then(result => {
+        response.send(result);
+    })
+    .catch(err => {
+        response.send("an error occured on our end");
+    })
+}
