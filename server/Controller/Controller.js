@@ -1,11 +1,22 @@
-const crypto = require("crypto-js");
 const Auth = require("../Auth/Auth");
 const UserController = require("./UserController");
 const CategorieController = require("./CategoriesController");
+const TokenController = require("./TokenController");
 
-// const generateRandomKey = ()=>{
-//     return crypto.lib.WordArray.random(16).toString();
-// }
+
+/*
+ uttiliser cette fonction quand la tache requiert des privileges
+ il existe trois niveaux normalement 
+ 1 : visiteur
+ 2 : editeur
+ 3 : administrateur
+
+ la fonction recoit le niveau requit de la tache en premier,la reference de la fonction/tache et les objects req,res
+ elle va automatiquement chercher le jetons dans la requete,evaluer sa validite puis executer la fonctions si
+ le proprietaire du jetons a assez de privileges et que le jetons na pas expirer
+
+
+*/
 const CheckAndDoJob = async (jobLevel,job,request,response) => {
     if(request.body.token == null) {response.send("provide token please"); return;}
     const token = request.body.token;
@@ -20,6 +31,7 @@ const CheckAndDoJob = async (jobLevel,job,request,response) => {
     }
     
 }
+//fin fonction verification
 
 exports.createCategorie = (request,response) => {
     CategorieController.createCategorie(request,response);
@@ -34,7 +46,7 @@ exports.getAllUsers = (request,response) => {
     UserController.getAllUsers(request,response);
 }
 exports.createToken = async (request,response) => {
-    
+    CheckAndDoJob(3,TokenController.CreateToken,request,response);
 }
 
 // les fonctions lister,ajouter,supprimer etc seront ici
