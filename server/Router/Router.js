@@ -5,7 +5,7 @@ const controller = require("../Controller/Controller");
 //on va controller les liens ici, choisir la fonction controller qui va gerer ce lien
 
 router.get("/",controller.sayHello);
-
+router.get("/articles",controller.sayHello);
 
 
 module.exports = router;
