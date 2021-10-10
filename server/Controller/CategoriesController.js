@@ -1,8 +1,9 @@
 const CategorieModel = require("../Database/Categorie");
 exports.createCategorie = (request,response) => {
 
-    const nom = request.body.nom;
-    Categorie.Model.findOne({
+    let nom = request.body.nom;
+    nom = nom[0].toUpperCase() + nom.slice(1);
+    CategorieModel.findOne({
         nom : nom
     })
     .then(result => {

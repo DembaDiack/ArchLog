@@ -15,4 +15,7 @@ router.post("/token/all",controller.getAllTokens);
 router.get("/user/all",controller.getAllUsers);
 router.post("/user/create",controller.createUser);
 
+
+router.post("/categorie/create",controller.createCategorie);
+
 module.exports = router;

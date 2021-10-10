@@ -34,7 +34,7 @@ const CheckAndDoJob = async (jobLevel,job,request,response) => {
 //fin fonction verification
 
 exports.createCategorie = (request,response) => {
-    CategorieController.createCategorie(request,response);
+    CheckAndDoJob(2,CategorieController.createCategorie,request,response);
 }
 exports.sayHello = (request,response) => {
     response.send("Hello world");
