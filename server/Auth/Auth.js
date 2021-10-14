@@ -38,3 +38,19 @@ exports.canDoJob = async (token,jobLevel) =>{
     isExpired = await this.checkExpiration(token);
     return (tokenLevel >= jobLevel && isExpired == false);
 }
+exports.getTokenEmail = (token) => {
+    return TokenModel.findOne({
+        token : token
+    })
+    .then((result) => {
+        if(result == null)
+        {
+            return null;
+        }
+        else
+        {
+            email = result.owner.email;
+            return email;
+        }
+    })
+}

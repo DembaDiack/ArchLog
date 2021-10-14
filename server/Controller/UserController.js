@@ -1,4 +1,5 @@
 const UserModel = require("../Database/User");
+const TokenModel = require("../Database/Tokens");
 const passPhrase = "ilikecookies";
 const AES = require("crypto-js").AES;
 
@@ -36,9 +37,76 @@ exports.createUser = (request,response) => {
 exports.getAllUsers = (request,response) => {
     UserModel.find()
     .then(result => {
+        console.log(result);
         response.send(result);
     })
     .catch(err => {
         response.send("a problem happened on our end");
     })
+}
+exports.getUserByEmail = (request,response) => {
+    const email = request.body.email;
+    console.log(email);
+    UserModel.find({
+        email : email
+    })
+    .then(result => {
+        console.log(result);
+        if(result == null)
+        {
+            response.send("user not found");
+        }
+        else
+        {
+            response.send(result);
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        response.send("an error has occured");
+    });
+
+}
+exports.getUserByToken = (request,response) => {
+    const tokenEnc = request.body.token;
+    const token = AES.decrypt(tokenEnc,passPhrase).toString();
+    TokenModel.find({
+        token : token
+    })
+    .then(result => {
+        response.send(result.owner);
+    })
+    .catch(err => {
+        console.log(err);
+        response.send("an error has occured");
+    })
+}
+exports.loginUser = async (request,response) => {
+    const email = request.body.email;
+    const password = AES.decrypt(request.body.password,passPhrase);
+
+    const user = await UserModel.find({email : email});
+    if(user == null) {response.send(false); return;}
+    const userPassword = AES.decrypt(user[0].password,passPhrase);
+    console.log(userPassword,password)
+    if(password.toString() == userPassword.toString())
+    {
+        response.send(true);
+    }
+    else
+    {
+        response.send(false);
+    }
+
+}
+exports.deleteUserByEmail = (request,response) => {
+    const email = request.body.email;
+    UserModel.find({
+        email : email
+    })
+    .remove();
+    TokenModel.find({
+        "owner.email" : email
+    }).remove();
+    
 }

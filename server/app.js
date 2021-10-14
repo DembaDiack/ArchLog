@@ -11,6 +11,8 @@ const Connection = require("./Database/Connection");
 app.use(cors());
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
+
+
 app.use(mainRoutes);
 
 
