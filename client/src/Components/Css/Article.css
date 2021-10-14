@@ -1,0 +1,18 @@
+.Article
+{
+    background: white;
+    box-shadow: -1px 0px 6px 3px #e2e2e2;
+    border-radius: 15px;
+    padding-top: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.Article:hover
+{
+    transform: translateY(-10px);
+}
+.Article , a {
+    color : black;
+    font-style: none;
+    text-decoration: none;
+}

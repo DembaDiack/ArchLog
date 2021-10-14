@@ -17,7 +17,7 @@ const Article = new Schema({
         type : String,
         required : true
     },
-    Contenue : {
+    Contenu : {
         type : String,
         required : true
     }

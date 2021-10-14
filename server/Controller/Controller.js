@@ -2,7 +2,7 @@ const Auth = require("../Auth/Auth");
 const UserController = require("./UserController");
 const CategorieController = require("./CategoriesController");
 const TokenController = require("./TokenController");
-
+const ArticleController = require("./ArticleController");
 
 /*
  uttiliser cette fonction quand la tache requiert des privileges
@@ -35,7 +35,7 @@ const CheckAndDoJob = async (jobLevel,job,request,response) => {
 
 exports.createCategorie = (request,response) => {
     CheckAndDoJob(2,CategorieController.createCategorie,request,response);
-    //c
+    
 }
 exports.sayHello = (request,response) => {
     response.send("Hello world");
@@ -43,8 +43,11 @@ exports.sayHello = (request,response) => {
 exports.createUser = (request,response) => {
     CheckAndDoJob(3,UserController.createUser,request,response);
 }
+exports.userLogin = (request,response)=>{
+    UserController.loginUser(request,response);
+}
 exports.getAllUsers = (request,response) => {
-    UserController.getAllUsers(request,response);
+    CheckAndDoJob(3,UserController.getAllUsers,request,response);
 }
 exports.createToken = async (request,response) => {
     CheckAndDoJob(3,TokenController.CreateToken,request,response);
@@ -52,5 +55,34 @@ exports.createToken = async (request,response) => {
 exports.getAllTokens = (request,response) => {
     CheckAndDoJob(3,TokenController.getAllTokens,request,response);
 }
-
+exports.createArticle = (request,response) => {
+    CheckAndDoJob(2,ArticleController.createArticle,request,response);
+}
+exports.getAllCategories = (request,response) => {
+    CategorieController.getAllCategories(request,response);
+}
+exports.getAllArticles = (request,response) => {
+    ArticleController.getAllArticles(request,response);
+}
+exports.getArticlePage = (request,response) => {
+    ArticleController.getArticlePage(request,response);
+}
+exports.getArticleById = (request,response) => {
+    ArticleController.getArticleById(request,response);
+}
+exports.getTokenEmail = (request,response) => {
+    CheckAndDoJob(3,TokenController.getTokenEmail,request,response);
+}
+exports.getUserByEmail = (request,response) => {
+    CheckAndDoJob(3,UserController.getUserByEmail,request,response);
+}
+exports.getNumOfArticles = (request,response) => {
+    ArticleController.getNumberOfArticles(request,response);
+}
+exports.deleteArticleById = (request,response) => {
+    CheckAndDoJob(2,ArticleController.deleteArticleById,request,response);
+}
+exports.getTokenByEmail = (request,response) => {
+    CheckAndDoJob(3,TokenController.getTokenByEmail,request,response);
+}
 // les fonctions lister,ajouter,supprimer etc seront ici

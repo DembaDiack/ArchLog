@@ -55,3 +55,34 @@ exports.getAllTokens = (request,response) => {
         response.send("an error occured on our end");
     })
 }
+exports.getTokenOwner = (request,response) => {
+    TokenModel.find({
+        token : request.body.qtoken
+    })
+    .then(result => {
+        if(result){
+            response.send(result.owner.email);
+        }
+        else
+        {
+            response.send("token doesnt exist"); 
+        }
+    })
+    .catch(err => {
+        response.send("an error happened on our end");
+    })
+}
+exports.getTokenByEmail = (request,response) => {
+    TokenModel.find({
+        "owner.email" : request.body.email,
+        expiration : {
+            "$gte" : Date.now()
+        }
+    })
+    .then(result => {
+        response.send(result);
+    })
+    .catch(err => {
+        response.send(err);
+    });
+}

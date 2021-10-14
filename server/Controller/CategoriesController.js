@@ -26,3 +26,20 @@ exports.createCategorie = (request,response) => {
         response.send("une erreur sest produite de notre cote");
     })
 }
+exports.findCategorie = (categorie) =>{
+    return CategorieModel.findOne({
+        nom : categorie
+    })
+    .then((result)=>{
+        return result
+    })
+}
+exports.getAllCategories = (request,response)=>{
+    CategorieModel.find()
+    .then(result => {
+        response.send(result);
+    })
+    .catch(err => {
+        response.send("err");
+    })
+}
