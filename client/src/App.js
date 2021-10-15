@@ -7,6 +7,8 @@ import Read from "./Components/Read";
 import Connect from "./Components/Connection";
 import Settings from "./Components/Settings/Settings";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import Create from "./Components/Create";
+import Categorie from "./Components/Categorie";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       <Route exact path="/" component={Home}/>
       <Route path="/article/:id" component={Read}/>
       <Route path="/login" component={Connect}/>
+      <Route path="/edit/article/" component={Create}/>
+      <Route path="/categorie/:categorie" component={Categorie}/>
       <ProtectedRoute component={Settings} path="/settings"/>
     </Router>
   );

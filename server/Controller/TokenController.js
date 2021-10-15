@@ -72,6 +72,17 @@ exports.getTokenOwner = (request,response) => {
         response.send("an error happened on our end");
     })
 }
+exports.getAllTokensByEmail = (request,response) => {
+    TokenModel.find({
+        "owner.email" : request.body.email
+    })
+    .then(result => {
+        response.send(result);
+    })
+    .catch(err => {
+        response.send(err);
+    });
+}
 exports.getTokenByEmail = (request,response) => {
     TokenModel.find({
         "owner.email" : request.body.email,
@@ -85,4 +96,15 @@ exports.getTokenByEmail = (request,response) => {
     .catch(err => {
         response.send(err);
     });
+}
+exports.deleteToken = (request,response) => {
+    TokenModel.deleteOne({
+        "_id" : request.body.id
+    })
+    .then(result => {
+        console.log(result);
+    })
+    .catch(err => {
+        console.log(err);
+    })
 }

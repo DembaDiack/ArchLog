@@ -1,7 +1,7 @@
 import {React,useEffect,useState} from "react";
 import axios from "axios";
 const Register = ()=>{
-    const masterToken = "194be39923a6074ca705086f2f910a24";
+    const masterToken = "09b30d7f548a12e055c587b9233d4738";
 
     const initialState = {
         email : "",
@@ -50,7 +50,7 @@ const Register = ()=>{
                 </form>
 
 
-            <button onClick={SignUp} className="btn btn-primary" type="button">creer</button>
+            <button onClick={SignUp} className="mb-5 btn btn-primary" type="button">creer</button>
         </div>
         </div>
     )

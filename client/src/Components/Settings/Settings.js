@@ -2,6 +2,7 @@ import React, { useEffect,useState } from "react";
 import Auth from "../../Auth/Auth";
 import Register from "./Register";
 import Users from "./Users";
+import Categorie from "./Categorie";
 
 const Settings = ()=> {
 
@@ -30,9 +31,16 @@ const Settings = ()=> {
     <div>
         Votre Niveau {state.level}
         {
-            state.level >= 3 ? [<Register/> , <Users/>] : null
+            state.level >= 3 ? <Register/> : null
 
         }
+        {
+            state.level >= 2 ? <Categorie/> : null
+        }
+        {
+            state.level >= 3 ? <Users/> : null
+        }
+        
     </div>
     )
 }

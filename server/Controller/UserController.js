@@ -1,4 +1,5 @@
 const UserModel = require("../Database/User");
+const ArticleModel = require("../Database/Articles");
 const TokenModel = require("../Database/Tokens");
 const passPhrase = "ilikecookies";
 const AES = require("crypto-js").AES;
@@ -44,6 +45,7 @@ exports.getAllUsers = (request,response) => {
         response.send("a problem happened on our end");
     })
 }
+
 exports.getUserByEmail = (request,response) => {
     const email = request.body.email;
     console.log(email);
@@ -101,12 +103,24 @@ exports.loginUser = async (request,response) => {
 }
 exports.deleteUserByEmail = (request,response) => {
     const email = request.body.email;
-    UserModel.find({
+    console.log("delete : ",email);
+    UserModel.deleteOne({
         email : email
     })
-    .remove();
-    TokenModel.find({
-        "owner.email" : email
-    }).remove();
+    .then(result => {
+        ArticleModel.deleteMany({"Auteur.email" : email})
+        .then(result => {
+            console.log("delete docs",result);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+        console.log(result);
+        response.send(result);
+    })
+    .catch(err => {
+        console.log(err);
+        response.send(err);
+    })
     
 }

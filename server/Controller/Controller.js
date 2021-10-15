@@ -3,6 +3,7 @@ const UserController = require("./UserController");
 const CategorieController = require("./CategoriesController");
 const TokenController = require("./TokenController");
 const ArticleController = require("./ArticleController");
+const { request } = require("http");
 
 /*
  uttiliser cette fonction quand la tache requiert des privileges
@@ -76,13 +77,28 @@ exports.getTokenEmail = (request,response) => {
 exports.getUserByEmail = (request,response) => {
     CheckAndDoJob(3,UserController.getUserByEmail,request,response);
 }
-exports.getNumOfArticles = (request,response) => {
-    ArticleController.getNumberOfArticles(request,response);
-}
 exports.deleteArticleById = (request,response) => {
     CheckAndDoJob(2,ArticleController.deleteArticleById,request,response);
 }
 exports.getTokenByEmail = (request,response) => {
     CheckAndDoJob(3,TokenController.getTokenByEmail,request,response);
+}
+exports.getAllTokensByEmail = (request,response) => {
+    CheckAndDoJob(3,TokenController.getAllTokensByEmail,request,response);
+}
+exports.deleteTokenById = (request,response) => {
+    CheckAndDoJob(3,TokenController.deleteToken,request,response);
+}
+exports.deleteUserByEmail = (request,response)=>{
+    CheckAndDoJob(3,UserController.deleteUserByEmail,request,response);
+}
+exports.findArticleByCat = (request,response)=>{
+    ArticleController.findArticleByCat(request,response);
+}
+exports.countArticles = (request,response)=>{
+    ArticleController.numOfArticles(request,response);
+}
+exports.countArticlesByCat = (request,response)=>{
+    ArticleController.numOfArticlesByCat(request,response);
 }
 // les fonctions lister,ajouter,supprimer etc seront ici
