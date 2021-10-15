@@ -26,7 +26,10 @@ router.get("/categorie/all",controller.getAllCategories);
 router.post("/article/create",controller.createArticle);
 router.get("/article/all",controller.getAllArticles);
 router.get("/article/page/:page",controller.getArticlePage);
-router.get("/article/:id",controller.getArticleById);
-router.get("/article/count",controller.getNumOfArticles);
 router.post("/article/delete",controller.deleteArticleById);
+router.get("/article/categorie/:categorie/:page",controller.findArticleByCat);
+router.get("/article/counter",controller.countArticles);
+router.get("/article/counter/:Categorie",controller.countArticlesByCat);
+router.get("/article/:id",controller.getArticleById);
+
 module.exports = router;

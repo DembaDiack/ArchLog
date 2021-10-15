@@ -4,15 +4,12 @@ import {useLocation} from "react-router-dom";
 import Auth from "../Auth/Auth";
 
 const Create = ()=>{
-    const search = useLocation().search;
-    const id = new URLSearchParams(search).get('id');
     const auth = new Auth();
-    let editMode = false;
     const initialState = {
         categories : [],
-        Contenu : "",
-        Titre : "",
-        Categorie : null
+        contenu : "",
+        titre : "",
+        categorie : null
     };
     let [state,setState] = useState(initialState);
 
@@ -44,26 +41,6 @@ const Create = ()=>{
         console.log(state);
     },[state]);
 
-    useEffect(()=>{
-        axios.get(`http://localhost:4000/article/${id}`)
-        .then(result => {
-            if(result.data != "article doesnt exist")
-            {
-                console.log("dfffffffff",result);
-                setState({
-                    ...state,
-                    Contenu : result.data.Contenu,
-                    Titre : result.data.Titre,
-                    Categorie : result.data.Categorie.nom
-                });
-                console.log(state);
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    },[]);
-
     const createArt = async ()=>{
         axios.post("http://localhost:4000/article/create",{
             ...state,
@@ -83,7 +60,7 @@ const Create = ()=>{
                 <div className="input-group-prepend">
                     <span className="input-group-text" id="inputGroup-sizing-sm">title</span>
                 </div>
-                <input value={state.Titre} name="titre" onInput={onInput} type="text" className="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                <input value={state.titre} name="titre" onInput={onInput} type="text" className="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
             </div>
             <select onChange={onInput} name="categorie" id="Titre">
                 <option value="" default >Categorie</option>
@@ -92,7 +69,7 @@ const Create = ()=>{
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Content</label>
                 <textarea onInput={onInput} name="contenu" class="form-control" id="exampleFormControlTextarea1" rows="3">
-                    {state.Contenu}
+                    {state.contenu}
                 </textarea>
             </div>
             <button onClick={createArt} type="button" style={{width:"100%"}}  class="mt-5 btn btn-dark">Save</button>

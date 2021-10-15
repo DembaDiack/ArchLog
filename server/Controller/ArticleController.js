@@ -65,24 +65,15 @@ exports.getAllArticles = (request,response) => {
     })
 }
 exports.getArticlePage = (request,response) => {
-    const q = null;
-    const categorie = null;
-
-    const regex = [
-        {Titre : {"$regex" : q,"$options" : "i"}},
-        {Auteur : {"$regex" : q,"$options" : "i"}}
-    ]
-    const cat = [
-        {Categorie : {"$regex" : categorie,"$options" : "i"}}
-    ]
     const page = request.params.page;
     const itemsPerPage = 8;
     const startIndex = (page - 1) * itemsPerPage;
-    ArticleModel.find({"$or" : regex,"$and" : cat})
+    ArticleModel.find()
     .skip(startIndex)
     .limit(itemsPerPage)
     .then(result => {
         console.log(result);
+        response.send(result);
     })
     .catch(err => {
         console.log(err);
@@ -101,6 +92,7 @@ exports.getArticleById = (request,response) => {
 exports.getNumberOfArticles = (request,response) => {
     ArticleModel.count()
     .then(result => {
+        console.log(result);
         response.send(result);
     })
     .catch(err => {
@@ -120,13 +112,41 @@ exports.deleteArticleById = (request,response) => {
     })
 }
 exports.findArticleByCat = (request,response) => {
+    const page = request.params.page;
+    const itemsPerPage = 8;
+    const startIndex = (page - 1) * itemsPerPage;
     ArticleModel.find({
-        Categorie : request.body.categorie
+        "Categorie.nom" : request.params.categorie
     })
+    .skip(startIndex)
+    .limit(itemsPerPage)
     .then(result => {
+        console.log(request.params.categorie,result)
         response.send(result);
     })
     .catch(err => {
         response.send(err);
+    })
+}
+exports.numOfArticles = (request,response)=>{
+    ArticleModel.count({})
+    .then(result => {
+        console.log(result);
+        response.send({count : result});
+    })
+    .catch(err => {
+        console.log(err);
+        response.send("error");
+    })
+}
+exports.numOfArticlesByCat = (request,response)=>{
+    ArticleModel.count({"Categorie.nom" : request.params.Categorie})
+    .then(result => {
+        console.log(result);
+        response.send({count : result});
+    })
+    .catch(err => {
+        console.log(err);
+        response.send("error");
     })
 }

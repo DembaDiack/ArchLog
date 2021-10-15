@@ -17,6 +17,7 @@ class Auth
     }
     isConnected()
     {
+        console.log(this.email);
         return (this.cookies.get("email") != undefined);
     }
     setSession()
@@ -61,7 +62,10 @@ class Auth
     }
     getEmail()
     {
-        return AES.decrypt(this.email,this.passPhrase).toString(crypto.enc.Utf8);
+        if(this.email)
+        {
+            return AES.decrypt(this.email,this.passPhrase).toString(crypto.enc.Utf8);
+        }
     }
     matchTokenToEmail(token)
     {

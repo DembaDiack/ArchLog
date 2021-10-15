@@ -11,7 +11,7 @@ const Home = ()=>{
     return(
         <div>
             <SearchBar query={query} setQuery={setQuery}/>
-            <Articles query={query} setQuery={setQuery} />
+            <Articles url="http://localhost:4000/article/page/" query={query} setQuery={setQuery} />
         </div>
     )
 }
