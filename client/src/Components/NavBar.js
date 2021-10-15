@@ -16,6 +16,7 @@ const NavBar = ()=>{
                     <a className="btn btn-primary ms-auto" role="button" href="/login" style={{ marginRight: 18 }}>Sign In</a>
                 </div>
                 }
+                <a className="btn btn-primary ms-auto mr-5" role="button" href="/edit/article" style={{ background: 'var(--bs-gray-600)' }}>Ecrire</a>
                 <a className="btn btn-primary ms-auto" role="button" href="/settings" style={{ background: 'var(--bs-gray-600)' }}>Settings</a>
             </div>
         </nav>

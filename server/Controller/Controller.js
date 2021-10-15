@@ -85,4 +85,13 @@ exports.deleteArticleById = (request,response) => {
 exports.getTokenByEmail = (request,response) => {
     CheckAndDoJob(3,TokenController.getTokenByEmail,request,response);
 }
+exports.getAllTokensByEmail = (request,response) => {
+    CheckAndDoJob(3,TokenController.getAllTokensByEmail,request,response);
+}
+exports.deleteTokenById = (request,response) => {
+    CheckAndDoJob(3,TokenController.deleteToken,request,response);
+}
+exports.deleteUserByEmail = (request,response)=>{
+    CheckAndDoJob(3,UserController.deleteUserByEmail,request,response);
+}
 // les fonctions lister,ajouter,supprimer etc seront ici

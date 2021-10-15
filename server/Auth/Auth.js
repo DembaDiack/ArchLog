@@ -5,6 +5,7 @@ exports.checkLevel = (token) => {
         token : token
     })
     .then((result) => {
+        console.log("token :",result);
         if(result == null)
         {
             return null;

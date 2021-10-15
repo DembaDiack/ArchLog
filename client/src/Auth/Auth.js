@@ -2,7 +2,7 @@ import {AES} from "crypto-js";
 import crypto from 'crypto-js';
 import axios from "axios"
 import Cookies from "universal-cookie";
-const masterToken = "194be39923a6074ca705086f2f910a24";
+const masterToken = "09b30d7f548a12e055c587b9233d4738";
 class Auth
 {
     
@@ -93,13 +93,13 @@ class Auth
     }
     getToken()
     {
-        console.log(this.getEmail());
+        
         return axios.post("http://localhost:4000/token",{
             email : this.getEmail(),
             token : masterToken
         })
         .then(result => {
-            return result.data.token;
+            return result.data[0].token;
         })
         .catch(err => {
             return err;

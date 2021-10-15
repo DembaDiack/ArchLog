@@ -11,13 +11,14 @@ router.post("/token/create",controller.createToken);
 router.post("/token/all",controller.getAllTokens);
 router.post("/token/email",controller.getTokenEmail);
 router.post("/token",controller.getTokenByEmail);
-
+router.post("/token/all/email",controller.getAllTokensByEmail);
+router.post("/token/delete",controller.deleteTokenById);
 
 router.post("/user/all",controller.getAllUsers);
 router.post("/user/create",controller.createUser);
 router.post("/user/login",controller.userLogin);
 router.post("/user/email",controller.getUserByEmail);
-
+router.post("/user/delete",controller.deleteUserByEmail);
 
 router.post("/categorie/create",controller.createCategorie);
 router.get("/categorie/all",controller.getAllCategories);
