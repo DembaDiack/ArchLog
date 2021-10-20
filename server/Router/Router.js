@@ -19,6 +19,7 @@ router.post("/user/create",controller.createUser);
 router.post("/user/login",controller.userLogin);
 router.post("/user/email",controller.getUserByEmail);
 router.post("/user/delete",controller.deleteUserByEmail);
+router.post("/user/edit",controller.editUser)
 
 router.post("/categorie/create",controller.createCategorie);
 router.get("/categorie/all",controller.getAllCategories);

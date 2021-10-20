@@ -16,8 +16,8 @@ function App() {
       <NavBar/>
       <Route exact path="/" component={Home}/>
       <Route path="/article/:id" component={Read}/>
-      <Route path="/login" component={Connect}/>
-      <Route path="/edit/article/" component={Create}/>
+      <Route exact path="/login" component={Connect}/>
+      <ProtectedRoute path="/edit/article/" component={Create}/>
       <Route path="/categorie/:categorie" component={Categorie}/>
       <ProtectedRoute component={Settings} path="/settings"/>
     </Router>

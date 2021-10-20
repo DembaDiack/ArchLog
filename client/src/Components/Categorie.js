@@ -13,10 +13,15 @@ const Categorie = (props) => {
         console.log(cat);
     },[]);
     
+    let [query,setQuery] = useState("");
+    useEffect(()=>{
+        console.log(query);
+    },[query]);
+
     return(
     <div>
-        <SearchBar/>
-        <Articles Categorie={cat} url={`http://localhost:4000/article/categorie/${cat}/`}/>
+        <SearchBar query={query} setQuery={setQuery}/>
+        <Articles Categorie={cat} url={`http://localhost:4000/article/categorie/${cat}/`} query={query} setQuery={setQuery}/>
     </div>
     )
 }

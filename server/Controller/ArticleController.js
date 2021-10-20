@@ -66,12 +66,19 @@ exports.getAllArticles = (request,response) => {
 }
 exports.getArticlePage = (request,response) => {
     const page = request.params.page;
+    const q = request.query.q;
+    console.log(q);
+    const regex = [
+        {"Titre" : {"$regex" : q , "$options" : "i"}},
+        {"Auteur.email" : {"$regex" : q , "$options" : "i"}}
+    ];
     const itemsPerPage = 8;
     const startIndex = (page - 1) * itemsPerPage;
-    ArticleModel.find()
+    ArticleModel.find({"$or" : regex})
     .skip(startIndex)
     .limit(itemsPerPage)
     .then(result => {
+        console.log("---------------------------------");
         console.log(result);
         response.send(result);
     })
@@ -149,4 +156,26 @@ exports.numOfArticlesByCat = (request,response)=>{
         console.log(err);
         response.send("error");
     })
+}
+exports.editArticle = (request,response)=>{
+    const article = request.body.article;
+    ArticleModel.findOne({
+        "_id" : article._id
+    })
+    .then(result => {
+        result.Titre = article.Titre;
+        result.Contenu = article.Contenu;
+        result.Categorie = article.Categorie;
+        result.save()
+        .then((res)=>{
+            response.send("article edited");
+        })
+        .catch(err => {
+            response.send("error editting article");
+        })
+    })
+    .catch(err => {
+        response.send("error finding article");
+    })
+    
 }

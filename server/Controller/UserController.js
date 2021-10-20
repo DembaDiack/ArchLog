@@ -3,6 +3,7 @@ const ArticleModel = require("../Database/Articles");
 const TokenModel = require("../Database/Tokens");
 const passPhrase = "ilikecookies";
 const AES = require("crypto-js").AES;
+const xmlify = require("xmlify");
 
 exports.createUser = (request,response) => {
     newUser = request.body;
@@ -35,13 +36,21 @@ exports.createUser = (request,response) => {
         console.log(err);
     })
 }
-exports.getAllUsers = (request,response) => {
+exports.getAllUsers = (request,response) => { 
     UserModel.find()
+    
     .then(result => {
-        console.log(result);
-        response.send(result);
+        if(request.query.format == "xml")
+        {
+            response.send(xmlify(result,"users"));
+        }
+        else{
+            response.send(result);
+        }
+        
     })
     .catch(err => {
+        console.log(err);
         response.send("a problem happened on our end");
     })
 }
@@ -123,4 +132,35 @@ exports.deleteUserByEmail = (request,response) => {
         response.send(err);
     })
     
+}
+exports.editUSer = (request,response) => {
+    const newUser = JSON.parse(request.body.user_data);
+    console.log(newUser.find)
+    const newPassword = AES.encrypt(newUser.password,passPhrase);
+    UserModel.findOne({"email" : newUser.find})
+    .then(result => {
+        console.log(result);
+        result.email = newUser.email;
+        result.password = newPassword;
+        result.level = Number.parseInt(newUser.level);
+        if(result.level > 3)
+        {
+            result.level = 3
+        }
+        if(result.level <= 0)
+        {
+            result.level = 1;
+        }
+        result.save()
+        .then(()=>{
+            response.send(result)
+        })
+        .catch(err=>{
+            repsonse.send(err);
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        response.send("no");
+    })
 }

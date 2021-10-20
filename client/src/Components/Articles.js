@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useRef} from "react";
 import Article from "./Article";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
@@ -14,6 +14,15 @@ const Articles = (props)=>{
       limit : 0
     }
     let [state,setState] = useState(initialState);
+
+    function usePrevious(value) {
+      const ref = useRef();
+      useEffect(() => {
+        ref.current = value;
+      });
+      return ref.current;
+    }
+    const prevPage = usePrevious(state.page);
 
     useEffect(()=>{
       let url = "http://localhost:4000/article/counter/";
@@ -36,13 +45,20 @@ const Articles = (props)=>{
 
     useEffect(()=>{
         console.log("running");
-        const url = props.url + state.page;
-        console.log(url);
+        const url = props.url + state.page + `?q=${props.query}`;
         axios.get(url)
         .then(result => {
           console.log(result);
             let articles_arr = result.data;
-            const arr_tab = state.articles;
+            let arr_tab;
+            if(props.query != "")
+            {
+              arr_tab = [];
+            }
+            else
+            {
+              arr_tab = state.articles;
+            }
             articles_arr.forEach(art => {
               console.log(art);
               arr_tab.push(<Article token={token} level={auth.userLevel} categorie={art.Categorie} id={art._id} key={art._id} titre={art.Titre} contenue={art.Contenu} user={art.Auteur.email} />)
@@ -55,7 +71,7 @@ const Articles = (props)=>{
         .catch(err => {
             console.log(err);
         })
-    },[state.page])
+    },[state.page,props.query])
 
     const loadMore = ()=>{
       setState({
@@ -66,6 +82,10 @@ const Articles = (props)=>{
     useEffect(()=>{
       console.log(state);
     },[state]);
+
+    useEffect(()=>{
+      console.log(props.query);
+    },[props.query])
 
     return(
       <section className="text-center bg-light features-icons mt-5">

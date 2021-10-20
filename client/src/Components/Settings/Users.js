@@ -41,8 +41,12 @@ const Users = (props) => {
     },[])
 
     return(
-        <div className="vstack mt-5">
+        <div className="container  mt-5">
+            <p class="text-center" style={{fontSize
+             : 18}}>Gestion Des Uttilisateurs</p>
+            <div>
             {state.users}
+            </div>
         </div>
     )
 }

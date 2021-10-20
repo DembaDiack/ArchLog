@@ -43,3 +43,26 @@ exports.getAllCategories = (request,response)=>{
         response.send("err");
     })
 }
+
+exports.deleteCategorie = (request,response)=> {
+    const cat = request.body.cat;
+    ArticleModel.find({
+        "Categorie" : cat
+    })
+    .then(result => {
+        const promises = [];
+        result.forEach(art => {
+            promises.push(art.remove());
+        })
+        promises.all()
+        .then(()=>{
+            CategorieModel.findOne({
+                "nom" : cat
+            })
+            .then(result => {
+                result.remove();
+            })
+        })
+
+    })
+}
