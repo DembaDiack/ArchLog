@@ -35,13 +35,14 @@ const Register = ()=>{
     }
     return(
         <div>
-            creer des uttilisateurs
+            <p class="text-center" style={{fontSize
+             : 18}}>Creer des uttilisateurs</p>
 
 
             <div className="container d-flex flex-column justify-content-center">
             <input onInput={onInput} type="text" name="email" placeholder="Email" style={{ marginBottom: 10, paddingLeft: 10 }} />
             <input onInput={onInput} type="password" name="password" className="d-flex align-items-center" placeholder="Password" style={{ marginBottom: 10, paddingLeft: 10 }} />
-                <form action="/action_page.php">
+                <form action="/action_page.php" className="mb-3">
                     <label htmlFor="Niveau">Niveau</label>
                     <select onChange={onInput} name="level" id="level">
                         <option value={2}>Editeur</option>

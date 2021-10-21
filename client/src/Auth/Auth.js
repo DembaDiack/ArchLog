@@ -17,7 +17,7 @@ class Auth
     }
     isConnected()
     {
-        console.log(this.email);
+        console.log(this.email,this.cookies.get("email"),this.cookies.get("email") != undefined);
         return (this.cookies.get("email") != undefined);
     }
     setSession()

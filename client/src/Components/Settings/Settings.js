@@ -3,7 +3,7 @@ import Auth from "../../Auth/Auth";
 import Register from "./Register";
 import Users from "./Users";
 import Categorie from "./Categorie";
-
+import "../Css/Settings.css";
 const Settings = ()=> {
 
     const auth = new Auth();
@@ -29,16 +29,17 @@ const Settings = ()=> {
 
     return(
     <div>
-        Votre Niveau {state.level}
+        <p class="text-center mt-5 mb-5" style={{fontSize
+             : 22}}>Votre Niveau : {state.level}</p>
         {
-            state.level >= 3 ? <Register/> : null
-
+            state.level >= 3 ? <span><Register/> <hr/></span> : null
+            
         }
         {
-            state.level >= 2 ? <Categorie/> : null
+            state.level >= 2 ? <span><Categorie/> <hr/></span> : null
         }
         {
-            state.level >= 3 ? <Users/> : null
+            state.level >= 3 ? <span><Users/> <hr/></span> : null
         }
         
     </div>

@@ -3,6 +3,8 @@ const ArticleModel = require("../Database/Articles");
 const TokenModel = require("../Database/Tokens");
 const passPhrase = "ilikecookies";
 const AES = require("crypto-js").AES;
+const Crypto = require("crypto-js");
+const xmlify = require("xmlify");
 
 exports.createUser = (request,response) => {
     newUser = request.body;
@@ -35,13 +37,21 @@ exports.createUser = (request,response) => {
         console.log(err);
     })
 }
-exports.getAllUsers = (request,response) => {
+exports.getAllUsers = (request,response) => { 
     UserModel.find()
+    
     .then(result => {
-        console.log(result);
-        response.send(result);
+        if(request.query.format == "xml")
+        {
+            response.send(xmlify(result,"users"));
+        }
+        else{
+            response.send(result);
+        }
+        
     })
     .catch(err => {
+        console.log(err);
         response.send("a problem happened on our end");
     })
 }
@@ -85,13 +95,24 @@ exports.getUserByToken = (request,response) => {
 }
 exports.loginUser = async (request,response) => {
     const email = request.body.email;
-    const password = AES.decrypt(request.body.password,passPhrase);
+    let password = request.body.password;
+    let python = true;
+    if(!request.body.source)
+    {
+        password = AES.decrypt(request.body.password,passPhrase);
+        python = false;
+    }
 
     const user = await UserModel.find({email : email});
     if(user == null) {response.send(false); return;}
     const userPassword = AES.decrypt(user[0].password,passPhrase);
-    console.log(userPassword,password)
-    if(password.toString() == userPassword.toString())
+    console.log("helllo");
+    console.log(AES.decrypt(request.body.password,"ilikecookies").toString());
+    if(!python)
+    {
+        password = password.toString(Crypto.enc.Utf8);
+    }
+    if(password == userPassword.toString(Crypto.enc.Utf8))
     {
         response.send(true);
     }
@@ -123,4 +144,39 @@ exports.deleteUserByEmail = (request,response) => {
         response.send(err);
     })
     
+}
+exports.editUSer = (request,response) => {
+    let newUser = request.body.user_data;
+    try {
+         newUser = JSON.parse(request.body.user_data);
+    } catch (error) {
+        newUser = request.body.user_data;
+    }
+    const newPassword = AES.encrypt(newUser.password,passPhrase);
+    UserModel.findOne({"email" : newUser.find})
+    .then(result => {
+        console.log(result);
+        result.email = newUser.email;
+        result.password = newPassword;
+        result.level = Number.parseInt(newUser.level);
+        if(result.level > 3)
+        {
+            result.level = 3
+        }
+        if(result.level <= 0)
+        {
+            result.level = 1;
+        }
+        result.save()
+        .then(()=>{
+            response.send(result)
+        })
+        .catch(err=>{
+            repsonse.send(err);
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        response.send("no");
+    })
 }

@@ -101,4 +101,13 @@ exports.countArticles = (request,response)=>{
 exports.countArticlesByCat = (request,response)=>{
     ArticleController.numOfArticlesByCat(request,response);
 }
+exports.editUser = (request,response) => {
+    UserController.editUSer(request,response);
+}
+exports.findCategorie = (request,response) => {
+    CategorieController.findCategorie(request,response);
+}
+exports.editArticle = (request,response) => {
+    CheckAndDoJob(2,ArticleController.editArticle,request,response);
+}
 // les fonctions lister,ajouter,supprimer etc seront ici
