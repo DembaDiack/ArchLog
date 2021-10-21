@@ -26,12 +26,17 @@ exports.createCategorie = (request,response) => {
         response.send("une erreur sest produite de notre cote");
     })
 }
-exports.findCategorie = (categorie) =>{
+exports.findCategorie = (request,response) =>{
+    const categorie = request.params.nom;
+
     return CategorieModel.findOne({
         nom : categorie
     })
     .then((result)=>{
-        return result
+        response.send(result);
+    })
+    .catch(err => {
+        response.send(err);
     })
 }
 exports.getAllCategories = (request,response)=>{

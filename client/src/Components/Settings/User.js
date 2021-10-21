@@ -73,7 +73,7 @@ const User = (props)=>{
                         {state.tokens}
                     </ul>
                 </p>
-                <a className="card-link" href="#" style={{cursor : "pointer"}}>Modifier</a>
+                <a className="card-link" href={`/edit/user/${props.email}`} style={{cursor : "pointer"}}>Modifier</a>
                 <a className="card-link" onClick={generateToken} style={{cursor : "pointer"}}>Generate Token</a>
                 <a className="card-link" onClick={deleteUser} style={{cursor : "pointer"}} >Supprimer</a>
             </div>

@@ -9,6 +9,8 @@ import Settings from "./Components/Settings/Settings";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import Create from "./Components/Create";
 import Categorie from "./Components/Categorie";
+import Edit from "./Components/Edit";
+import UserEdit from "./Components/UserEdit";
 
 function App() {
   return (
@@ -17,9 +19,11 @@ function App() {
       <Route exact path="/" component={Home}/>
       <Route path="/article/:id" component={Read}/>
       <Route exact path="/login" component={Connect}/>
-      <ProtectedRoute path="/edit/article/" component={Create}/>
+      <ProtectedRoute path="/create/article/" component={Create}/>
+      <ProtectedRoute path="/edit/article/" component={Edit}/>
       <Route path="/categorie/:categorie" component={Categorie}/>
       <ProtectedRoute component={Settings} path="/settings"/>
+      <ProtectedRoute component={UserEdit} path="/edit/user/:email"/>
     </Router>
   );
 }

@@ -72,7 +72,7 @@ exports.getArticlePage = (request,response) => {
         {"Titre" : {"$regex" : q , "$options" : "i"}},
         {"Auteur.email" : {"$regex" : q , "$options" : "i"}}
     ];
-    const itemsPerPage = 8;
+    const itemsPerPage = 3;
     const startIndex = (page - 1) * itemsPerPage;
     ArticleModel.find({"$or" : regex})
     .skip(startIndex)
@@ -120,7 +120,7 @@ exports.deleteArticleById = (request,response) => {
 }
 exports.findArticleByCat = (request,response) => {
     const page = request.params.page;
-    const itemsPerPage = 8;
+    const itemsPerPage = 3;
     const startIndex = (page - 1) * itemsPerPage;
     ArticleModel.find({
         "Categorie.nom" : request.params.categorie

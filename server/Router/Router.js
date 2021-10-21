@@ -23,6 +23,7 @@ router.post("/user/edit",controller.editUser)
 
 router.post("/categorie/create",controller.createCategorie);
 router.get("/categorie/all",controller.getAllCategories);
+router.get("/categorie/:nom",controller.findCategorie);
 
 router.post("/article/create",controller.createArticle);
 router.get("/article/all",controller.getAllArticles);
@@ -32,5 +33,5 @@ router.get("/article/categorie/:categorie/:page",controller.findArticleByCat);
 router.get("/article/counter",controller.countArticles);
 router.get("/article/counter/:Categorie",controller.countArticlesByCat);
 router.get("/article/:id",controller.getArticleById);
-
+router.post("/article/edit",controller.editArticle);
 module.exports = router;

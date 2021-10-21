@@ -3,6 +3,7 @@ const ArticleModel = require("../Database/Articles");
 const TokenModel = require("../Database/Tokens");
 const passPhrase = "ilikecookies";
 const AES = require("crypto-js").AES;
+const Crypto = require("crypto-js");
 const xmlify = require("xmlify");
 
 exports.createUser = (request,response) => {
@@ -94,13 +95,24 @@ exports.getUserByToken = (request,response) => {
 }
 exports.loginUser = async (request,response) => {
     const email = request.body.email;
-    const password = AES.decrypt(request.body.password,passPhrase);
+    let password = request.body.password;
+    let python = true;
+    if(!request.body.source)
+    {
+        password = AES.decrypt(request.body.password,passPhrase);
+        python = false;
+    }
 
     const user = await UserModel.find({email : email});
     if(user == null) {response.send(false); return;}
     const userPassword = AES.decrypt(user[0].password,passPhrase);
-    console.log(userPassword,password)
-    if(password.toString() == userPassword.toString())
+    console.log("helllo");
+    console.log(AES.decrypt(request.body.password,"ilikecookies").toString());
+    if(!python)
+    {
+        password = password.toString(Crypto.enc.Utf8);
+    }
+    if(password == userPassword.toString(Crypto.enc.Utf8))
     {
         response.send(true);
     }
@@ -134,8 +146,12 @@ exports.deleteUserByEmail = (request,response) => {
     
 }
 exports.editUSer = (request,response) => {
-    const newUser = JSON.parse(request.body.user_data);
-    console.log(newUser.find)
+    let newUser = request.body.user_data;
+    try {
+         newUser = JSON.parse(request.body.user_data);
+    } catch (error) {
+        newUser = request.body.user_data;
+    }
     const newPassword = AES.encrypt(newUser.password,passPhrase);
     UserModel.findOne({"email" : newUser.find})
     .then(result => {
